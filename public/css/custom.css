@@ -1,0 +1,35 @@
+body,
+html {
+    font-family: "Helvetica", "Source Sans Pro", sans-serif;
+}
+
+.login-layout {
+    background-color: #c3d4f4;
+}
+
+.login-card {
+    background-color: #fafafa;
+}
+
+.custom-button-login {
+    border-radius: 8px;
+    background-color: white;
+    font-size: 32px;
+    font-weight: 700;
+    color: #0c2967;
+    padding: 0px;
+}
+
+.dashboard-layout {
+    background-color: #0c2967;
+}
+
+.navbar-layout {
+    background-color: #0c2967;
+    border-bottom-color: #0c2967;
+}
+
+.logo-navbar {
+    width: 166;
+    height: 50px;
+}
