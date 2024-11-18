@@ -1,26 +1,22 @@
-/* global Chart:false */
-
 $(function () {
     'use strict';
 
-    loadChart();
+    loadWasteChart();
 });
 
-function updateChart() {
-    var selectedValue = document.getElementById('timeframe-select').value;
+var $amountWasteChart = $('#amount-waste-chart');
+var amountWasteChart;
 
-    loadChart(selectedValue);
-}
-
-function loadChart(valueTimeFrame = 'days') {
-    var ticksStyle = {
-        fontColor: '#fff',
+function loadWasteChart(valueTimeFrame = 'days') {
+    const ticksStyle = {
+        color: '#fff',
+        font: {
+            family: 'Helvetica',
+            size: 14,
+            weight: 300,
+        },
+        align: 'center',
     };
-
-    var mode = 'index';
-    var intersect = true;
-
-    var $amountWasteChart = $('#amount-waste-chart');
 
     var labelMonth = [
         'Januari',
@@ -59,8 +55,12 @@ function loadChart(valueTimeFrame = 'days') {
     var dataResiduDays = [99, 43, 45, 66, 12, 22, 200];
     var dataOrganicDays = [60, 80, 70, 67, 80, 77, 100];
 
+    if (amountWasteChart) {
+        amountWasteChart.destroy();
+    }
+
     // eslint-disable-next-line no-unused-vars
-    var amountWasteChart = new Chart($amountWasteChart, {
+    amountWasteChart = new Chart($amountWasteChart, {
         data: {
             labels: valueTimeFrame === 'days' ? labelDays : labelMonth,
             datasets: [
@@ -115,29 +115,41 @@ function loadChart(valueTimeFrame = 'days') {
                 display: false,
             },
             scales: {
-                yAxes: [
-                    {
+                x: {
+                    ticks: ticksStyle,
+                    // ticks: $.extend(
+                    //     {
+                    //         beginAtZero: true,
+                    //         suggestedMax: 200,
+                    //     },
+                    //     ticksStyle
+                    // ),
+                    beginAtZero: true,
+                    grid: {
+                        color: '#5973B2',
+                        borderDash: [5, 5],
+                    },
+                },
+                y: {
+                    ticks: {
                         display: false,
-                        ticks: $.extend(
-                            {
-                                beginAtZero: true,
-                                suggestedMax: 200,
-                            },
-                            ticksStyle
-                        ),
                     },
-                ],
-                xAxes: [
-                    {
-                        display: true,
-                        gridLines: {
-                            display: false,
-                        },
-                        ticks: ticksStyle,
+                    grid: {
+                        display: false,
                     },
-                ],
+                },
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                },
             },
         },
+    });
+
+    $('#timeFrameSelect').on('change', function () {
+        valueTimeFrame = $(this).val();
+        loadWasteChart(valueTimeFrame);
     });
 
     // lgtm [js/unused-local-variable]

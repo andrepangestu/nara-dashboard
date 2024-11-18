@@ -3,78 +3,98 @@
 $(function () {
     'use strict';
 
-    var ticksStyle = {
-        fontColor: '#fff',
+    loadAnorganicChart();
+});
+
+var $anorganicChart = $('#type-anorganic-waste-chart');
+var anorganicChart;
+
+function loadAnorganicChart() {
+    const ticksStyle = {
+        color: '#fff',
+        font: {
+            family: 'Helvetica',
+            size: function (context) {
+                var width = context.chart.width;
+                return width < 600 ? 10 : 14;
+            },
+            weight: 300,
+        },
+        align: 'center',
+        autoSkip: false,
+        maxRotation: 0,
+        minRotation: 0,
     };
 
-    var $anorganicChart = $('#type-anorganic-waste-chart');
+    if (anorganicChart) {
+        anorganicChart.destroy();
+    }
+
+    var chartLabels = [
+        'LDPE',
+        'HDPE',
+        'PP',
+        'PET',
+        'Beling',
+        'Aluminium',
+        'Besi',
+        'Kaleng',
+        'Kertas',
+        'Kardus',
+        'Gabruk',
+    ];
+
+    const labelAdjusted = chartLabels.map((label) => label.split(' '));
+
+    var chartData = [
+        1000, 2000, 3000, 2500, 2700, 2500, 3000, 2500, 3000, 2500, 3000,
+    ];
 
     // eslint-disable-next-line no-unused-vars
-    var anorganicChart = new Chart($anorganicChart, {
+    anorganicChart = new Chart($anorganicChart, {
         type: 'bar',
         data: {
-            labels: ['Plastik PET', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+            labels: labelAdjusted,
             datasets: [
                 {
+                    // label: 'Organic Waste',
                     backgroundColor: '#11388A',
                     borderColor: '#11388A',
                     hoverBackgroundColor: '#5AB2FF',
                     hoverBorderColor: '#5AB2FF',
-                    data: [1000, 2000, 3000, 2500, 2700, 2500, 3000],
-                    borderWidth: 2,
-                    borderRadius: Number.MAX_VALUE,
+                    data: chartData,
+                    borderRadius: 50,
                     borderSkipped: false,
                 },
             ],
         },
         options: {
-            datasetFill: false,
             responsive: true,
             maintainAspectRatio: false,
-            legend: {
-                display: false,
-            },
             scales: {
-                yAxes: [
-                    {
+                x: {
+                    grid: {
                         display: false,
-                        gridLines: {
-                            display: false,
-                        },
-                        ticks: $.extend(
-                            {
-                                beginAtZero: true,
-                                // Include a dollar sign in the ticks
-                                callback: function (value) {
-                                    if (value >= 1000) {
-                                        value /= 1000;
-                                        value += 'k';
-                                    }
-
-                                    return '$' + value;
-                                },
-                            },
-                            ticksStyle
-                        ),
                     },
-                ],
-                xAxes: [
-                    {
-                        display: true,
-                        gridLines: {
-                            display: false,
-                        },
-                        ticks: ticksStyle,
+                    ticks: ticksStyle,
+                    beginAtZero: true,
+                },
+                y: {
+                    ticks: {
+                        display: false,
                     },
-                ],
-            },
-            elements: {
-                bar: {
-                    roundedCorners: 10, // Set the radius for rounded corners
+                    grid: {
+                        display: false,
+                    },
                 },
             },
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                tooltip: false,
+            },
         },
+        plugins: [innerBarTextAnorganicChart],
     });
-
-    // lgtm [js/unused-local-variable]
-});
+}

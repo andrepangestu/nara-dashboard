@@ -129,9 +129,15 @@
 <script src="plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
+
+<!-- Chart.js -->
+<script src="packages/chartjs/dist/chart.umd.js"></script>
+<!-- <script src="plugins/chart.js/Chart.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
 <!-- OPTIONAL SCRIPTS -->
-<script src="plugins/chart.js/Chart.min.js"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
+<script src="{{ asset('js/helper.js') }}"></script>
 <script src="{{ asset('js/amount-waste-chart.js') }}"></script>
 <script src="{{ asset('js/type-waste-chart.js') }}"></script>
 <script src="{{ asset('js/type-anorganic-waste-chart.js') }}"></script>

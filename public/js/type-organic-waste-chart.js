@@ -3,73 +3,91 @@
 $(function () {
     'use strict';
 
-    var ticksStyle = {
-        fontColor: '#fff',
+    loadOrganicChart();
+});
+
+var $organicChart = $('#type-organic-waste-chart');
+var organicChart;
+
+function loadOrganicChart() {
+    const ticksStyle = {
+        color: '#fff',
+        font: {
+            family: 'Helvetica',
+            size: function (context) {
+                var width = context.chart.width;
+                return width < 500 ? 10 : 14;
+            },
+            weight: 300,
+        },
+        align: 'center',
+        autoSkip: false,
+        maxRotation: 0,
+        minRotation: 0,
     };
 
-    var mode = 'index';
-    var intersect = true;
+    if (organicChart) {
+        organicChart.destroy();
+    }
 
-    var $organicChart = $('#type-organic-waste-chart');
+    var chartLabels = [
+        'Sayuran',
+        'Minyak Jelantah',
+        'Dedaunan / Sejenisnya',
+        'Kulit Telur',
+        'Ranting',
+        'Kotoran Hewan',
+    ];
+
+    const labelAdjusted = chartLabels.map((label) => label.split(' '));
+
+    var chartData = [1000, 2000, 3000, 2500, 2700, 2500, 3000];
+
     // eslint-disable-next-line no-unused-vars
-    var organicChart = new Chart($organicChart, {
+    organicChart = new Chart($organicChart, {
         type: 'bar',
         data: {
-            labels: ['Kotoran', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+            labels: labelAdjusted,
             datasets: [
                 {
+                    // label: 'Organic Waste',
                     backgroundColor: '#11388A',
                     borderColor: '#11388A',
                     hoverBackgroundColor: '#5AB2FF',
                     hoverBorderColor: '#5AB2FF',
-                    data: [1000, 2000, 3000, 2500, 2700, 2500, 3000],
-                    borderWidth: 2,
-                    borderRadius: Number.MAX_VALUE,
+                    data: chartData,
+                    borderRadius: 50,
                     borderSkipped: false,
                 },
             ],
         },
         options: {
+            responsive: true,
             maintainAspectRatio: false,
-            legend: {
-                display: false,
-            },
             scales: {
-                yAxes: [
-                    {
+                x: {
+                    grid: {
                         display: false,
-                        gridLines: {
-                            display: false,
-                        },
-                        ticks: $.extend(
-                            {
-                                beginAtZero: true,
-                                // Include a dollar sign in the ticks
-                                callback: function (value) {
-                                    if (value >= 1000) {
-                                        value /= 1000;
-                                        value += 'k';
-                                    }
-
-                                    return '$' + value;
-                                },
-                            },
-                            ticksStyle
-                        ),
                     },
-                ],
-                xAxes: [
-                    {
-                        display: true,
-                        gridLines: {
-                            display: false,
-                        },
-                        ticks: ticksStyle,
+                    ticks: ticksStyle,
+                    beginAtZero: true,
+                },
+                y: {
+                    ticks: {
+                        display: false,
                     },
-                ],
+                    grid: {
+                        display: false,
+                    },
+                },
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                tooltip: false,
             },
         },
+        plugins: [innerBarTextOrganicChart],
     });
-
-    // lgtm [js/unused-local-variable]
-});
+}

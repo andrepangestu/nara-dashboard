@@ -4,8 +4,8 @@
       <h3 class="card-title">Amounts of waste</h3>
 
       <div class="form-group">
-        <select class="custom-select" id="timeframe-select" onchange="updateChart()">
-          <option value="days">Days</option>
+        <select class="custom-select" id="timeFrameSelect">
+          <option value="days">Day</option>
           <option value="month">Month</option>
         </select>
       </div>
