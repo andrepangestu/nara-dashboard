@@ -11,6 +11,7 @@ use App\Models\User;
 use Hash;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+// use Illuminate\Support\Facades\Session;
   
 class AuthController extends Controller
 {
@@ -79,9 +80,12 @@ class AuthController extends Controller
         // Session::flush();
         
         if ($user) {
-          return redirect("register")->withSuccess('Great! You have Successfully registered');
+            // Store user data in session
+            Session::put('user', $user);
+            
+            return redirect("register")->withSuccess('Great! You have Successfully registered');
         } else {
-          return redirect("register")->withError('Opps! Something went wrong, please try again.');
+            return redirect("register")->withError('Opps! Something went wrong, please try again.');
         }
 
     }
@@ -102,6 +106,9 @@ class AuthController extends Controller
                 ->where('users.id', $userId)
                 ->first();
 
+            // Store user data in session
+            Session::put('user', $user);
+    
             return view('dashboard', compact('user'));
         }
   

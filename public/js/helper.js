@@ -1,3 +1,5 @@
+const currentDate = new Date().toISOString().split('T')[0];
+
 const innerBarTextAnorganicChart = {
     id: 'centerText',
     afterDatasetsDraw: function (chart) {
@@ -8,7 +10,7 @@ const innerBarTextAnorganicChart = {
                 meta.data.forEach(function (element, index) {
                     // Draw the text inside the bar
                     ctx.fillStyle = '#fff';
-                    var fontSize = chart.width < 600 ? 10 : 16;
+                    var fontSize = chart.width < 700 ? 12 : 16;
                     var fontStyle = 'normal';
                     var fontFamily = 'Helvetica';
                     ctx.font = Chart.helpers.fontString(

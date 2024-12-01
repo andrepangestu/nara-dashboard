@@ -18,28 +18,44 @@ function loadWasteChart(valueTimeFrame = 'days') {
         align: 'center',
     };
 
+    // var labelMonth = [
+    //     'Januari',
+    //     'Februari',
+    //     'Maret',
+    //     'April',
+    //     'Mei',
+    //     'Juni',
+    //     'Juli',
+    //     'Agustus',
+    //     'September',
+    //     'Oktober',
+    //     'November',
+    //     'Desember',
+    // ];
+
     var labelMonth = [
-        'Januari',
-        'Februari',
-        'Maret',
-        'April',
-        'Mei',
-        'Juni',
-        'Juli',
-        'Agustus',
-        'September',
-        'Oktober',
-        'November',
-        'Desember',
+        'NOV 25',
+        "DEC 25"
     ];
+    // var dataAnorganicMonth = [
+    //     100, 120, 170, 167, 180, 177, 160, 190, 200, 190, 200, 190,
+    // ];
+    // var dataOrganicMonth = [
+    //     344, 330, 202, 634, 234, 355, 865, 452, 333, 353, 222, 687,
+    // ];
+    // var dataResiduMonth = [
+    //     576, 654, 345, 352, 325, 765, 876, 345, 584, 435, 234, 643,
+    // ];
+
+
     var dataAnorganicMonth = [
-        100, 120, 170, 167, 180, 177, 160, 190, 200, 190, 200, 190,
+        100, 222
     ];
     var dataOrganicMonth = [
-        344, 330, 202, 634, 234, 355, 865, 452, 333, 353, 222, 687,
+        344, 300
     ];
     var dataResiduMonth = [
-        576, 654, 345, 352, 325, 765, 876, 345, 584, 435, 234, 643,
+        576, 400
     ];
 
     var labelDays = [

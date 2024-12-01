@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="text-summary-value">
-        60 Kg
+        {{ $total_all_waste }} Kg
       </div>
     </div>
 
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="text-summary-value">
-        85 Kg
+        {{ $residu }} Kg
       </div>
     </div>
 
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="text-summary-value">
-        Rp2.893
+        Rp{{ number_format($economic_value, 2, ',', '.') }}
       </div>
     </div>
 
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="text-summary-value">
-        569 Kg
+        {{ $manage_by_tpst }} Kg
       </div>
     </div>
 
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="text-summary-value">
-        982 Kg
+        {{ $manage_by_wastebank }} Kg
       </div>
     </div>
 

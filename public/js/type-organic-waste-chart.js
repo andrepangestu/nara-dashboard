@@ -2,21 +2,45 @@
 
 $(function () {
     'use strict';
+});
 
-    loadOrganicChart();
+
+getDataOrganic(currentDate, currentDate).then((data) => {
+    loadOrganicChart(data);
+}).catch((error) => {
+    console.error('Error fetching data from SheetDB:', error);
 });
 
 var $organicChart = $('#type-organic-waste-chart');
 var organicChart;
 
-function loadOrganicChart() {
+function getDataOrganic(start_date, end_date) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: '/organic-data',
+            method: 'GET',
+            data: {
+                start_date: start_date,
+                end_date: end_date
+            },
+            success: function (data) {
+                resolve(data);
+            },
+            error: function (error) {
+                reject(error);
+            },
+        });
+    });
+}
+
+function loadOrganicChart(data) {
     const ticksStyle = {
         color: '#fff',
         font: {
             family: 'Helvetica',
             size: function (context) {
                 var width = context.chart.width;
-                return width < 500 ? 10 : 14;
+                return width < 500 ? 14 : 16;
             },
             weight: 300,
         },
@@ -31,17 +55,16 @@ function loadOrganicChart() {
     }
 
     var chartLabels = [
-        'Sayuran',
+        'Sampah Organik',
         'Minyak Jelantah',
-        'Dedaunan / Sejenisnya',
-        'Kulit Telur',
-        'Ranting',
-        'Kotoran Hewan',
     ];
 
     const labelAdjusted = chartLabels.map((label) => label.split(' '));
 
-    var chartData = [1000, 2000, 3000, 2500, 2700, 2500, 3000];
+    var chartData = [
+        data.sampah_organic,
+        data.minyak_jelantah,
+    ];
 
     // eslint-disable-next-line no-unused-vars
     organicChart = new Chart($organicChart, {
@@ -85,9 +108,15 @@ function loadOrganicChart() {
                 legend: {
                     display: false,
                 },
-                tooltip: false,
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return context.raw;
+                        }
+                    },
+                },
             },
         },
-        plugins: [innerBarTextOrganicChart],
+        // plugins: [innerBarTextOrganicChart],
     });
 }

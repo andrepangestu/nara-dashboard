@@ -94,15 +94,15 @@
           <!-- /.row -->
 
           <div class="row">
-            <div class="col-lg-5">
+            <div class="col-lg-6">
               <x-type-anorganic-waste-card />
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-2">
               <x-type-organic-waste-card />
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <x-summary-card />
             </div>
           </div>
@@ -150,8 +150,34 @@
 
 <script>
 $(function() {
+
   $('#reservationdate').datetimepicker({
-    format: 'L'
+    format: 'L',
+    maxDate: new Date()
+  });
+
+  $('#reservationdate').on('change.datetimepicker', function(e) {
+    var selectedDate = e.date.format('YYYY-MM-DD');
+    console.log('Selected date:', selectedDate);
+
+    getDataAnorganic(selectedDate, selectedDate).then((data) => {
+      loadAnorganicChart(data);
+    }).catch((error) => {
+      console.error('Error fetching data from SheetDB:', error);
+    });
+
+    getDataOrganic(selectedDate, selectedDate).then((data) => {
+      loadOrganicChart(data);
+    }).catch((error) => {
+      console.error('Error fetching data from SheetDB:', error);
+    });
+
+    getDataTypeWaste(selectedDate, selectedDate).then((data) => {
+      loadTypeWasteChart(data);
+    }).catch((error) => {
+      console.error('Error fetching data from SheetDB:', error);
+    });
+    // You can now send the selected date to the server or use it as needed
   });
 });
 </script>
