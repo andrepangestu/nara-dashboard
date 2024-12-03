@@ -4,12 +4,13 @@ $(function () {
     'use strict';
 });
 
-
-getDataOrganic(currentDate, currentDate).then((data) => {
-    loadOrganicChart(data);
-}).catch((error) => {
-    console.error('Error fetching data from SheetDB:', error);
-});
+getDataOrganic(firstReleaseDate, currentDate)
+    .then((data) => {
+        loadOrganicChart(data);
+    })
+    .catch((error) => {
+        console.error('Error fetching data from SheetDB:', error);
+    });
 
 var $organicChart = $('#type-organic-waste-chart');
 var organicChart;
@@ -21,7 +22,7 @@ function getDataOrganic(start_date, end_date) {
             method: 'GET',
             data: {
                 start_date: start_date,
-                end_date: end_date
+                end_date: end_date,
             },
             success: function (data) {
                 resolve(data);
@@ -54,17 +55,11 @@ function loadOrganicChart(data) {
         organicChart.destroy();
     }
 
-    var chartLabels = [
-        'Sampah Organik',
-        'Minyak Jelantah',
-    ];
+    var chartLabels = ['Sampah Organik', 'Minyak Jelantah'];
 
     const labelAdjusted = chartLabels.map((label) => label.split(' '));
 
-    var chartData = [
-        data.sampah_organic,
-        data.minyak_jelantah,
-    ];
+    var chartData = [data.sampah_organik, data.minyak_jelantah];
 
     // eslint-disable-next-line no-unused-vars
     organicChart = new Chart($organicChart, {
@@ -111,8 +106,8 @@ function loadOrganicChart(data) {
                 tooltip: {
                     callbacks: {
                         label: function (context) {
-                            return context.raw;
-                        }
+                            return context.raw ? formatNumberWithDots(context.raw) : 0;
+                        },
                     },
                 },
             },

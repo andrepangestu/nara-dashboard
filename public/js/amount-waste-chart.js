@@ -1,13 +1,87 @@
 $(function () {
     'use strict';
+});
 
-    loadWasteChart();
+let valueTimeFrame = 'day';
+let past7Days = getDateMinus7Days(currentDate);
+
+getDataAmountWasteByDay(past7Days, currentDate)
+    .then((data) => {
+        loadAmountWasteChart(valueTimeFrame, data);
+    })
+    .catch((error) => {
+        console.error('Error fetching data from SheetDB:', error);
+    });
+
+$('#timeFrameSelect').on('change', function () {
+    valueTimeFrame = $(this).val();
+
+    if (valueTimeFrame === 'day') {
+        getDataAmountWasteByDay(past7Days, currentDate)
+            .then((data) => {
+                loadAmountWasteChart(valueTimeFrame, data);
+            })
+            .catch((error) => {
+                console.error('Error fetching data from SheetDB:', error);
+            });
+    } else {
+        getDataAmountWasteByMonth(currentDate)
+            .then((data) => {
+                loadAmountWasteChart(valueTimeFrame, data);
+            })
+            .catch((error) => {
+                console.error('Error fetching data from SheetDB:', error);
+            });
+    }
 });
 
 var $amountWasteChart = $('#amount-waste-chart');
 var amountWasteChart;
 
-function loadWasteChart(valueTimeFrame = 'days') {
+function getDateMinus7Days(currentDate) {
+    let current = new Date(currentDate);
+    current.setDate(current.getDate() - 6);
+    return current.toISOString().split('T')[0];
+}
+
+function getDataAmountWasteByDay(start_date, end_date) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: '/amount-day-data',
+            method: 'GET',
+            data: {
+                start_date: start_date,
+                end_date: end_date,
+            },
+            success: function (data) {
+                resolve(data);
+            },
+            error: function (error) {
+                reject(error);
+            },
+        });
+    });
+}
+
+function getDataAmountWasteByMonth(selected_date) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: '/amount-month-data',
+            method: 'GET',
+            data: {
+                selected_date: selected_date,
+            },
+            success: function (data) {
+                resolve(data);
+            },
+            error: function (error) {
+                reject(error);
+            },
+        });
+    });
+}
+
+function loadAmountWasteChart(valueTimeFrame, data) {
     const ticksStyle = {
         color: '#fff',
         font: {
@@ -18,58 +92,52 @@ function loadWasteChart(valueTimeFrame = 'days') {
         align: 'center',
     };
 
-    // var labelMonth = [
-    //     'Januari',
-    //     'Februari',
-    //     'Maret',
-    //     'April',
-    //     'Mei',
-    //     'Juni',
-    //     'Juli',
-    //     'Agustus',
-    //     'September',
-    //     'Oktober',
-    //     'November',
-    //     'Desember',
-    // ];
+    var labelMonth = [];
+    var dataAnorganicMonth = [];
+    var dataOrganicMonth = [];
+    var dataResiduMonth = [];
 
-    var labelMonth = [
-        'NOV 25',
-        "DEC 25"
-    ];
-    // var dataAnorganicMonth = [
-    //     100, 120, 170, 167, 180, 177, 160, 190, 200, 190, 200, 190,
-    // ];
-    // var dataOrganicMonth = [
-    //     344, 330, 202, 634, 234, 355, 865, 452, 333, 353, 222, 687,
-    // ];
-    // var dataResiduMonth = [
-    //     576, 654, 345, 352, 325, 765, 876, 345, 584, 435, 234, 643,
-    // ];
+    var labelDays = [];
+    var dataAnorganicDays = [];
+    var dataOrganicDays = [];
+    var dataResiduDays = [];
 
-
-    var dataAnorganicMonth = [
-        100, 222
-    ];
-    var dataOrganicMonth = [
-        344, 300
-    ];
-    var dataResiduMonth = [
-        576, 400
-    ];
-
-    var labelDays = [
-        'Senin',
-        'Selasa',
-        'Rabu',
-        'Kamis',
-        'Jumat',
-        'Sabtu',
-        'Minggu',
-    ];
-    var dataAnorganicDays = [100, 120, 170, 167, 180, 177, 160];
-    var dataResiduDays = [99, 43, 45, 66, 12, 22, 200];
-    var dataOrganicDays = [60, 80, 70, 67, 80, 77, 100];
+    if (valueTimeFrame === 'month') {
+        data.forEach((item) => {
+            let month = new Date(item.year, item.month - 1)
+                .toLocaleString('default', { month: 'short' })
+                .toUpperCase();
+            let year = item.year.toString().slice(2);
+            labelMonth.push(`${month} ${year}`);
+        });
+        data.forEach((item) => {
+            dataAnorganicMonth.push(item.total_data_anorganic);
+        });
+        data.forEach((item) => {
+            dataOrganicMonth.push(item.total_data_organic);
+        });
+        data.forEach((item) => {
+            dataResiduMonth.push(item.total_data_residu);
+        });
+    } else {
+        data.forEach((item) => {
+            let date = new Date(item.date);
+            let day = date.getDate().toString().padStart(2, '0');
+            let month = date
+                .toLocaleString('default', { month: 'short' })
+                .toUpperCase();
+            labelDays.push(`${day} ${month}`);
+        });
+        data.forEach((item) => {
+            dataAnorganicDays.push(item.total_data_anorganic);
+        });
+        data.forEach((item) => {
+            dataOrganicDays.push(item.total_data_organic);
+        });
+        data.forEach((item) => {
+            dataResiduDays.push(item.total_data_residu);
+        });
+    }
 
     if (amountWasteChart) {
         amountWasteChart.destroy();
@@ -78,12 +146,12 @@ function loadWasteChart(valueTimeFrame = 'days') {
     // eslint-disable-next-line no-unused-vars
     amountWasteChart = new Chart($amountWasteChart, {
         data: {
-            labels: valueTimeFrame === 'days' ? labelDays : labelMonth,
+            labels: valueTimeFrame === 'day' ? labelDays : labelMonth,
             datasets: [
                 {
                     type: 'line',
                     data:
-                        valueTimeFrame === 'days'
+                        valueTimeFrame === 'day'
                             ? dataAnorganicDays
                             : dataAnorganicMonth,
                     backgroundColor: '#FA897F',
@@ -97,7 +165,7 @@ function loadWasteChart(valueTimeFrame = 'days') {
                 {
                     type: 'line',
                     data:
-                        valueTimeFrame === 'days'
+                        valueTimeFrame === 'day'
                             ? dataResiduDays
                             : dataResiduMonth,
                     backgroundColor: 'tansparent',
@@ -112,7 +180,7 @@ function loadWasteChart(valueTimeFrame = 'days') {
                 {
                     type: 'line',
                     data:
-                        valueTimeFrame === 'days'
+                        valueTimeFrame === 'day'
                             ? dataOrganicDays
                             : dataOrganicMonth,
                     backgroundColor: 'tansparent',
@@ -161,11 +229,6 @@ function loadWasteChart(valueTimeFrame = 'days') {
                 },
             },
         },
-    });
-
-    $('#timeFrameSelect').on('change', function () {
-        valueTimeFrame = $(this).val();
-        loadWasteChart(valueTimeFrame);
     });
 
     // lgtm [js/unused-local-variable]

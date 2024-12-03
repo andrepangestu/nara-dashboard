@@ -4,15 +4,16 @@ $(function () {
     'use strict';
 });
 
-getDataAnorganic(currentDate, currentDate).then((data) => {
-    loadAnorganicChart(data);
-}).catch((error) => {
-    console.error('Error fetching data from SheetDB:', error);
-});
+getDataAnorganic(firstReleaseDate, currentDate)
+    .then((data) => {
+        loadAnorganicChart(data);
+    })
+    .catch((error) => {
+        console.error('Error fetching data from SheetDB:', error);
+    });
 
 var $anorganicChart = $('#type-anorganic-waste-chart');
 var anorganicChart;
-
 
 function getDataAnorganic(start_date, end_date) {
     return new Promise((resolve, reject) => {
@@ -21,7 +22,7 @@ function getDataAnorganic(start_date, end_date) {
             method: 'GET',
             data: {
                 start_date: start_date,
-                end_date: end_date
+                end_date: end_date,
             },
             success: function (data) {
                 resolve(data);
@@ -128,8 +129,8 @@ function loadAnorganicChart(data) {
                 tooltip: {
                     callbacks: {
                         label: function (context) {
-                            return context.raw;
-                        }
+                            return context.raw ? formatNumberWithDots(context.raw) : 0;
+                        },
                     },
                 },
             },

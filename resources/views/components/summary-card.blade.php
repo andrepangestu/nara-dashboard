@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="text-summary-value">
-        {{ $total_all_waste }} Kg
+        <span id="amount_of_waste" style="word-break: break-all; " />
       </div>
     </div>
 
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="text-summary-value">
-        {{ $residu }} Kg
+        <span id="residu" style="word-break: break-all; " />
       </div>
     </div>
 
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="text-summary-value">
-        Rp{{ number_format($economic_value, 2, ',', '.') }}
+        <span id="economic_value" style="word-break: break-all; " />
       </div>
     </div>
 
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="text-summary-value">
-        {{ $manage_by_tpst }} Kg
+        <span id="manage_by_tpst" style="word-break: break-all; " />
       </div>
     </div>
 
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="text-summary-value">
-        {{ $manage_by_wastebank }} Kg
+        <span id="manage_by_wastebank" style="word-break: break-all; " />
       </div>
     </div>
 

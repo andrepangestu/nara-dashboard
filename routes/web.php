@@ -10,7 +10,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/save-data', [SheetDbController::class, 'saveDataAllCompany']);
+Route::get('save-data', [SheetDbController::class, 'saveDataAllCompany']);
 
 Route::get('sheet-db', [SheetDbController::class, 'get']);
 Route::get('login', [AuthController::class, 'index'])->name('login')->middleware('guest');
@@ -25,3 +25,5 @@ Route::get('anorganic-data', [DashboardController::class, 'getDataAnorganic']);
 Route::get('organic-data', [DashboardController::class, 'getDataOrganic']);
 Route::get('type-waste-data', [DashboardController::class, 'getDataTypeWaste']);
 Route::get('summary-data', [DashboardController::class, 'getDataSummary']);
+Route::get('amount-day-data', [DashboardController::class, 'getDataAmountsWasteByDay']);
+Route::get('amount-month-data', [DashboardController::class, 'getDataAmountsWasteByMonth']);

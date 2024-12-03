@@ -5,7 +5,7 @@
 
       <div class="form-group">
         <select class="custom-select" id="timeFrameSelect">
-          <option value="days">Day</option>
+          <option value="day">Day</option>
           <option value="month">Month</option>
         </select>
       </div>

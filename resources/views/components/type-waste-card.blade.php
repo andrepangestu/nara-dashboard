@@ -8,22 +8,22 @@
   <div class="card-body">
     <div class="position-relative">
       <div class="position-absolute text-white"
-        style="height: 10%; z-index: 9999; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        style="height: 5%; z-index: 99; top: 50%; left: 50%; transform: translate(-50%, -50%);">
         <div class="d-flex flex-column align-items-center">
-          <div class="text-center" style="font-weight: 300; line-height: 16.1px;">
+          <div class="text-center mb-2" style="font-weight: 300; line-height: 16.1px;">
             Total Waste (Kg)
           </div>
           <div class="d-flex flex-row align-items-center text-center">
-            <div class="mr-2" style="font-size: 50px; font-weight: 900;">
-              <span id="total-waste"></span>
+            <div class="mr-2" id="total-waste-container" style="font-weight: 900; line-height: normal;">
+              <span id="total-waste" style="word-break: break-all; "></span>
             </div>
           </div>
         </div>
       </div>
-      <canvas id="type-waste-chart" class="w-100" style="min-height: 250px; height: 250px; max-height: 250px;"></canvas>
+      <canvas id="type-waste-chart" style="min-height: 200px; max-height: 220px;"></canvas>
     </div>
 
-    <div class="d-flex flex-wrap justify-content-between legend-info-2 mt-3">
+    <div class="d-flex flex-wrap justify-content-around legend-info-2 mt-3">
       <div class="align-items-center mb-2">
         <div class="btn btn-block btn-primary border-0 btn-type-waste" style="background-color: #54BC73;"
           data-toggle="tooltip" data-placement="bottom"

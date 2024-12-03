@@ -1,0 +1,25 @@
+{
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "phpVersion": "7.4",
+    "overrides": [
+        {
+            "files": "*.blade.php",
+            "options": {
+                "parser": "html"
+            }
+        },
+        {
+            "files": "*.php",
+            "options": {
+                "parser": "php"
+            }
+        },
+        {
+            "files": "*.html",
+            "options": {
+                "parser": "html"
+            }
+        }
+    ]
+}

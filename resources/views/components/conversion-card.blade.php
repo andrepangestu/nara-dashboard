@@ -5,25 +5,41 @@
     </div>
   </div>
   <div class="card-body">
-    <div class="d-flex justify-content-center align-items-center mb-2">
-      <img src="{{ asset('images/icon-conversion-1.png') }}" alt="Nara Logo" class="mr-3 conversion-image">
-      <div class="align-items-cente">
-        <div class="text-sm">
-          Conversion to economic value
-        </div>
-        <div class="text-conversion-value">
-          1092 K
+    <div class="row justify-content-center align-items-center">
+
+      <div class="col-md-12 d-flex justify-content-center align-items-center mb-3">
+        <div class="row align-items-center">
+          <div class="col-md-4">
+            <img src="{{ asset('images/economic-value.svg') }}" alt="Nara Logo" class="mr-3 conversion-image">
+          </div>
+          <div class="col-md-8">
+            <div class="align-items-center">
+              <div class="text-sm">
+                Conversion to economic value
+              </div>
+              <div class="text-conversion-value">
+                1092 K
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="d-flex justify-content-center align-items-center mb-2">
-      <img src="{{ asset('images/icon-conversion-2.png') }}" alt="Nara Logo" class="mr-3 conversion-image">
-      <div class="align-items-cente">
-        <div class="text-sm">
-          Conversion to scholarship
-        </div>
-        <div class="text-conversion-value">
-          558
+
+      <div class="col-md-12 d-flex justify-content-center align-items-center mb-3">
+        <div class="row align-items-center">
+          <div class="col-md-4">
+            <img src="{{ asset('images/scholarship.svg') }}" alt="Nara Logo" class="mr-5 conversion-image">
+          </div>
+          <div class="col-md-8">
+            <div class="align-items-center">
+              <div class="text-sm">
+                Conversion to scholarship
+              </div>
+              <div class="text-conversion-value">
+                558
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

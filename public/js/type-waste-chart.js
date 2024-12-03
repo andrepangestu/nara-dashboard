@@ -8,14 +8,46 @@ $(function () {
     });
 });
 
-getDataTypeWaste(currentDate, currentDate).then((data) => {
-    loadTypeWasteChart(data);
-}).catch((error) => {
-    console.error('Error fetching data from SheetDB:', error);
-});
+getDataTypeWaste(firstReleaseDate, currentDate)
+    .then((data) => {
+        loadTypeWasteChart(data);
+    })
+    .catch((error) => {
+        console.error('Error fetching data from SheetDB:', error);
+    });
 
 var $typeWasteChart = $('#type-waste-chart');
 var typeWasteChart;
+
+document.addEventListener('DOMContentLoaded', function () {
+    const totalWasteElement = document.getElementById('total-waste');
+    const totalWasteContainer = document.getElementById(
+        'total-waste-container'
+    );
+
+    function adjustFontSize() {
+        const length = totalWasteElement.textContent.length;
+        let fontSize = '50px'; // default font size
+
+        if (length > 10) {
+            fontSize = '30px';
+        } else if (length > 6) {
+            fontSize = '40px';
+        }
+
+        totalWasteContainer.style.fontSize = fontSize;
+    }
+
+    // Initial adjustment
+    adjustFontSize();
+
+    // Adjust font size whenever the content changes
+    const observer = new MutationObserver(adjustFontSize);
+    observer.observe(totalWasteElement, {
+        childList: true,
+        subtree: true,
+    });
+});
 
 function getDataTypeWaste(start_date, end_date) {
     return new Promise((resolve, reject) => {
@@ -24,7 +56,7 @@ function getDataTypeWaste(start_date, end_date) {
             method: 'GET',
             data: {
                 start_date: start_date,
-                end_date: end_date
+                end_date: end_date,
             },
             success: function (data) {
                 resolve(data);
@@ -37,18 +69,16 @@ function getDataTypeWaste(start_date, end_date) {
 }
 
 function loadTypeWasteChart(data) {
-    var totalWaste = data.total_all_waste; 
+    var totalWaste = data.total_all_waste
+        ? formatNumberWithDots(data.total_all_waste)
+        : 0;
     document.getElementById('total-waste').innerText = totalWaste;
 
     var typeWasteData = {
         labels: ['Organic', 'Residu', 'Anorganic'],
         datasets: [
             {
-                data: [
-                    data.total_organic,
-                    data.total_anorganic,
-                    data.residu
-                ],
+                data: [data.total_organic, data.total_anorganic, data.residu],
                 backgroundColor: ['#54BC73', '#5AB2FF', '#FA897F'],
                 borderColor: 'rgba(0, 0, 0, 0)',
                 // borderRadius: 10, // Add this line to round the edges
@@ -70,12 +100,17 @@ function loadTypeWasteChart(data) {
                 callbacks: {
                     label: function (tooltipItem) {
                         var dataset = tooltipItem.dataset;
-                        var total = dataset.data.reduce((previousValue, currentValue) => previousValue + currentValue);
+                        var total = dataset.data.reduce(
+                            (previousValue, currentValue) =>
+                                previousValue + currentValue
+                        );
                         var currentValue = dataset.data[tooltipItem.dataIndex];
-                        var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                        var percentage = Math.floor(
+                            (currentValue / total) * 100 + 0.5
+                        );
                         return percentage + '%';
-                    }
-                }
+                    },
+                },
             },
         },
         rotation: -90,

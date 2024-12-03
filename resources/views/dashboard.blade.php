@@ -26,7 +26,7 @@
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light navbar-layout ">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light navbar-layout" style="padding: 24px;">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item d-none d-sm-inline-block">
@@ -73,36 +73,36 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper dashboard-layout">
       <!-- Content Header (Page header) -->
-      <section class="content-header"></section>
+      <section class="content-header" style="padding: 25px 0.5rem;"></section>
 
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-12">
               <x-amount-waste-card />
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-6">
               <x-type-waste-card />
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-6">
               <x-conversion-card class="w-100" />
             </div>
           </div>
           <!-- /.row -->
 
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-12">
               <x-type-anorganic-waste-card />
             </div>
 
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-md-6">
               <x-type-organic-waste-card />
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-6">
               <x-summary-card />
             </div>
           </div>
@@ -142,6 +142,7 @@
 <script src="{{ asset('js/type-waste-chart.js') }}"></script>
 <script src="{{ asset('js/type-anorganic-waste-chart.js') }}"></script>
 <script src="{{ asset('js/type-organic-waste-chart.js') }}"></script>
+<script src="{{ asset('js/summary-recap.js') }}"></script>
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js">
@@ -158,7 +159,6 @@ $(function() {
 
   $('#reservationdate').on('change.datetimepicker', function(e) {
     var selectedDate = e.date.format('YYYY-MM-DD');
-    console.log('Selected date:', selectedDate);
 
     getDataAnorganic(selectedDate, selectedDate).then((data) => {
       loadAnorganicChart(data);
@@ -177,7 +177,12 @@ $(function() {
     }).catch((error) => {
       console.error('Error fetching data from SheetDB:', error);
     });
-    // You can now send the selected date to the server or use it as needed
+
+    getDataSummary(selectedDate, selectedDate).then((data) => {
+      loadSummaryRecap(data);
+    }).catch((error) => {
+      console.error('Error fetching data from SheetDB:', error);
+    });
   });
 });
 </script>

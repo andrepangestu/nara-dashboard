@@ -1,4 +1,11 @@
-const currentDate = new Date().toISOString().split('T')[0];
+const currentDate = new Date(new Date().getTime() + 7 * 60 * 60 * 1000)
+    .toISOString()
+    .split('T')[0];
+const firstReleaseDate = '2024-11-20';
+
+function formatNumberWithDots(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
 
 const innerBarTextAnorganicChart = {
     id: 'centerText',
