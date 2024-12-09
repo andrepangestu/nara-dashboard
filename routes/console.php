@@ -8,5 +8,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Schedule::command('cron:save')->hourly();
+Schedule::command('cron:save')->dailyAt('03:00');
 // Schedule::command('cron:save')->everyMinute();

@@ -180,6 +180,7 @@ $(function() {
 
     getDataSummary(selectedDate, selectedDate).then((data) => {
       loadSummaryRecap(data);
+      loadTotalNasabah(data);
     }).catch((error) => {
       console.error('Error fetching data from SheetDB:', error);
     });

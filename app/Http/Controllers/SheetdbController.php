@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use SheetDB\SheetDB;
+use Illuminate\Support\Facades\Session;
+use DateTime;
+use DatePeriod;
+use DateInterval;
 
 class SheetDbController extends Controller
 {
     public function get() {
         $sheetdb = new SheetDB('oyq0u84zkxyt5', 'WTC Company');
 
-        // dd($sheetdb->get());
-        // dd($sheetdb->keys());
-        // dd($sheetdb->name());
         return $sheetdb->get();
         
     }
@@ -150,7 +151,6 @@ class SheetDbController extends Controller
     public function saveData($companyId, $responseData) {
         if (!empty($responseData)) {
             foreach ($responseData as $data) {
-                
                 $this->saveDataAnorganic($data, $companyId);
                 $this->saveDataOrganic($data, $companyId);
                 $this->saveDataSummary($data, $companyId);
@@ -166,7 +166,7 @@ class SheetDbController extends Controller
         $companies = \DB::table('company')->get();
         
         foreach ($companies as $company) {
-            $sheetDb = new SheetDB('oyq0u84zkxyt5', $company->name);
+            $sheetDb = new SheetDB('e2f6ea3hctvaw', $company->name);
             
             if (!empty($sheetDb->get())) {
                 $response = $sheetDb->search(['Date' => $date]);
@@ -176,4 +176,56 @@ class SheetDbController extends Controller
             }
         }
     }
+
+    public function saveDataManual($companyName, $startDate, $endDate) {
+        $company = \DB::table('company')->where('name', $companyName)->first();
+        $sheetDb = new SheetDB('e2f6ea3hctvaw', $company->name);
+
+        $dateRange = [];
+        try {
+            $start = DateTime::createFromFormat('Y-m-d', $startDate);
+            $end = DateTime::createFromFormat('Y-m-d', $endDate);
+
+            if (!$start || !$end) {
+                return response()->json(['error' => 'Invalid date format, please use YYYY-MM-DD'], 400);
+            }
+
+            if ($start > $end) {
+                return response()->json(['error' => 'Start date cannot be greater than end date'], 400);
+            }
+
+            $period = new DatePeriod(
+            $start,
+            new DateInterval('P1D'),
+                $end->modify('+1 day')
+            );
+
+            foreach ($period as $date) {
+                $dateRange[] = $date->format('Y-m-d');
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while processing dates'], 400);
+        }
+
+        
+        foreach ($dateRange as $date) {
+            $response = $sheetDb->search(['Date' => $date]);
+            
+            if (!empty($sheetDb->get())) {
+                $response = $sheetDb->search(['Date' => $date]);
+                $responseData = json_decode(json_encode($response), true);
+                
+                try {
+                    $this->saveData($company->id, $responseData);
+                    return response()->json(['message' => 'Data saved successfully']);
+                } catch (\Exception $e) {
+                    return response()->json(['error' => 'An error occurred while saving data: ' . $e->getMessage()], 500);
+                }
+            } else {
+                return response()->json(['message' => 'No data found']);
+            }
+        }
+    }
+
+
 }

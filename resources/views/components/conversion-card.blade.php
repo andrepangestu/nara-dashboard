@@ -17,8 +17,8 @@
               <div class="text-sm">
                 Conversion to economic value
               </div>
-              <div class="text-conversion-value">
-                1092 K
+              <div class="text-conversion-economic-value" id="economic-value-conversion-container">
+                <span id="economic_value_conversion" style="word-break: break-all; "></span>
               </div>
             </div>
           </div>

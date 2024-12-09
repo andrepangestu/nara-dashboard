@@ -47,6 +47,13 @@ html {
     color: #5ab2ff;
 }
 
+.text-conversion-economic-value {
+    font-size: 60px;
+    font-weight: 700;
+    color: #5ab2ff;
+    line-height: normal;
+}
+
 .conversion-image {
     width: 90px;
     height: 90px;

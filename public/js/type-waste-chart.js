@@ -24,23 +24,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalWasteContainer = document.getElementById(
         'total-waste-container'
     );
-
     function adjustFontSize() {
         const length = totalWasteElement.textContent.length;
         let fontSize = '50px'; // default font size
-
         if (length > 10) {
             fontSize = '30px';
-        } else if (length > 6) {
+        } else if (length > 5) {
             fontSize = '40px';
         }
-
         totalWasteContainer.style.fontSize = fontSize;
     }
-
     // Initial adjustment
     adjustFontSize();
-
     // Adjust font size whenever the content changes
     const observer = new MutationObserver(adjustFontSize);
     observer.observe(totalWasteElement, {
