@@ -1,0 +1,87 @@
+body,
+html {
+    font-family: 'Helvetica', 'Source Sans Pro', sans-serif;
+}
+
+.login-layout {
+    background-color: #c3d4f4;
+}
+
+.login-card {
+    background-color: #fafafa;
+    padding-top: 20%;
+}
+
+.custom-button-login {
+    border-radius: 8px;
+    background-color: white;
+    font-size: 32px;
+    font-weight: 700;
+    color: #0c2967;
+    padding: 0px;
+}
+
+.dashboard-layout {
+    background-color: #0c2967;
+}
+
+.navbar-layout {
+    background-color: #0c2967;
+    border-bottom-color: #0c2967;
+}
+
+.logo-navbar {
+    width: 166px;
+    height: 50px;
+}
+
+.text-summary-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #eef7ff;
+}
+
+.text-conversion-value {
+    font-size: 60px;
+    font-weight: 700;
+    color: #5ab2ff;
+}
+
+.text-conversion-economic-value {
+    font-size: 60px;
+    font-weight: 700;
+    color: #5ab2ff;
+    line-height: normal;
+}
+
+.conversion-image {
+    width: 90px;
+    height: 90px;
+}
+
+.card-layout {
+    background-color: #082259;
+    color: #fff;
+}
+
+.legend-info-1 {
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.legend-info-2 {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.btn-type-waste {
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.logo-profile {
+    width: 100px;
+    height: 100px;
+}
