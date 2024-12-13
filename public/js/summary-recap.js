@@ -42,11 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
     function adjustFontSize() {
         const length = economicValueConversionElement.textContent.length;
 
-        let fontSize = '60px'; // default font size
+        let fontSize = '35px'; // default font size
+
         if (length > 10) {
-            fontSize = '40px';
+            fontSize = '24px';
         } else if (length > 5) {
-            fontSize = '50px';
+            fontSize = '30px';
         }
         economicValueConversionContainer.style.fontSize = fontSize;
     }
@@ -62,15 +63,19 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function loadTotalNasabah(data) {
-    let economicValue = data.economic_value;
-    let economicValueConversion = economicValue
-        ? formatNumberWithDots(economicValue).replace(/\.\d{3}$/, '')
+    let economicValue = data.economic_value
+        ? formatNumberWithDots(data.economic_value)
         : 0;
-
-    console.log(economicValue.toString().length);
-
     document.getElementById('economic_value_conversion').innerText =
-        `${economicValue.toString().length > 3 ? economicValueConversion + ' K' : economicValueConversion}`;
+        `Rp${economicValue}`;
+
+    // let economicValue = data.economic_value;
+    // let economicValueConversion = economicValue
+    //     ? formatNumberWithDots(economicValue).replace(/\.\d{3}$/, '')
+    //     : 0;
+
+    // document.getElementById('economic_value_conversion').innerText =
+    //     `${economicValue.toString().length > 3 ? economicValueConversion + ' K' : economicValueConversion}`;
 }
 
 function loadSummaryRecap(data) {

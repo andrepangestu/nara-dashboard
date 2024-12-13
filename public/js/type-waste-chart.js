@@ -26,11 +26,12 @@ document.addEventListener('DOMContentLoaded', function () {
     );
     function adjustFontSize() {
         const length = totalWasteElement.textContent.length;
-        let fontSize = '50px'; // default font size
+        let fontSize = '35px'; // default font size
+
         if (length > 10) {
-            fontSize = '30px';
+            fontSize = '24px';
         } else if (length > 5) {
-            fontSize = '40px';
+            fontSize = '24px';
         }
         totalWasteContainer.style.fontSize = fontSize;
     }
