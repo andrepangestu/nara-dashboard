@@ -9,7 +9,7 @@
       <div class="d-flex align-items-center">
         <div class="mr-2 rounded" style="width: 15px; height: 15px; background-color: #03AED2;"></div>
         <div>
-          Amount of waste
+          Amount of waste (Kg)
         </div>
       </div>
       <div class="text-summary-value">

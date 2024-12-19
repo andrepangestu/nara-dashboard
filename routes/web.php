@@ -11,7 +11,8 @@ Route::get('/', function () {
 });
 
 Route::get('save-data', [SheetDbController::class, 'saveDataAllCompany']);
-Route::get('save-data-manual/{companyName}/{startDate}/{endDate}', [SheetDbController::class, 'saveDataManual']);
+Route::get('save-data-manual-range-date/{companyName}/{startDate}/{endDate}', [SheetDbController::class, 'saveDataManualRangeDate']);
+Route::get('save-data-manual-selected-date/{companyName}/{selectedDate}', [SheetDbController::class, 'saveDataManualSelectedDate']);
 
 Route::get('sheet-db', [SheetDbController::class, 'get']);
 Route::get('login', [AuthController::class, 'index'])->name('login')->middleware('guest');

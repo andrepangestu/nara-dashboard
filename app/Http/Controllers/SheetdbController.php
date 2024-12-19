@@ -11,13 +11,6 @@ use DateInterval;
 
 class SheetDbController extends Controller
 {
-    public function get() {
-        $sheetdb = new SheetDB('oyq0u84zkxyt5', 'WTC Company');
-
-        return $sheetdb->get();
-        
-    }
-
     // SAVE DATA ANORGANIC
     public function saveDataAnorganic($data, $companyId) {
         $existingRecordAnorganic = \DB::table('tbl_anorganic_recap')
@@ -31,18 +24,18 @@ class SheetDbController extends Controller
             ->where('date', $data['Date'])
             ->where('company_id', $companyId)
             ->update([
-                'plastic_ldpe' => !empty($data['Plastic LDPE']) ? $data['Plastic LDPE'] : null,
-                'plastic_hdpe' => !empty($data['Plastic HDPE']) ? $data['Plastic HDPE'] : null,
-                'plastic_pet' => !empty($data['Plastic PET']) ? $data['Plastic PET'] : null,
-                'plastic_pp' => !empty($data['Plastic PP']) ? $data['Plastic PP'] : null,
-                'beling' => !empty($data['Beling']) ? $data['Beling'] : null,
-                'aluminium' => !empty($data['Aluminium']) ? $data['Aluminium'] : null,
-                'besi' => !empty($data['Besi']) ? $data['Besi'] : null,
-                'kaleng' => !empty($data['Kaleng']) ? $data['Kaleng'] : null,
-                'kertas' => !empty($data['Kertas']) ? $data['Kertas'] : null,
-                'kardus' => !empty($data['Kardus']) ? $data['Kardus'] : null,
-                'gabruk' => !empty($data['Gabruk']) ? $data['Gabruk'] : null,
-                'total_data_daily' => !empty($data['Total Data Anorganik Harian']) ? $data['Total Data Anorganik Harian'] : null,
+                'plastic_ldpe' => !empty($data['Plastic LDPE']) ? $data['Plastic LDPE'] : 0,
+                'plastic_hdpe' => !empty($data['Plastic HDPE']) ? $data['Plastic HDPE'] : 0,
+                'plastic_pet' => !empty($data['Plastic PET']) ? $data['Plastic PET'] : 0,
+                'plastic_pp' => !empty($data['Plastic PP']) ? $data['Plastic PP'] : 0,
+                'beling' => !empty($data['Beling']) ? $data['Beling'] : 0,
+                'aluminium' => !empty($data['Aluminium']) ? $data['Aluminium'] : 0,
+                'besi' => !empty($data['Besi']) ? $data['Besi'] : 0,
+                'kaleng' => !empty($data['Kaleng']) ? $data['Kaleng'] : 0,
+                'kertas' => !empty($data['Kertas']) ? $data['Kertas'] : 0,
+                'kardus' => !empty($data['Kardus']) ? $data['Kardus'] : 0,
+                'gabruk' => !empty($data['Gabruk']) ? $data['Gabruk'] : 0,
+                'total_data_daily' => !empty($data['Total Data Anorganik Harian']) ? $data['Total Data Anorganik Harian'] : 0,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
 
@@ -51,18 +44,18 @@ class SheetDbController extends Controller
             \DB::table('tbl_anorganic_recap')->insert([
                 'date' => $data['Date'],
                 'company_id' => $companyId,
-                'plastic_ldpe' => !empty($data['Plastic LDPE']) ? $data['Plastic LDPE'] : null,
-                'plastic_hdpe' => !empty($data['Plastic HDPE']) ? $data['Plastic HDPE'] : null,
-                'plastic_pet' => !empty($data['Plastic PET']) ? $data['Plastic PET'] : null,
-                'plastic_pp' => !empty($data['Plastic PP']) ? $data['Plastic PP'] : null,
-                'beling' => !empty($data['Beling']) ? $data['Beling'] : null,
-                'aluminium' => !empty($data['Aluminium']) ? $data['Aluminium'] : null,
-                'besi' => !empty($data['Besi']) ? $data['Besi'] : null,
-                'kaleng' => !empty($data['Kaleng']) ? $data['Kaleng'] : null,
-                'kertas' => !empty($data['Kertas']) ? $data['Kertas'] : null,
-                'kardus' => !empty($data['Kardus']) ? $data['Kardus'] : null,
-                'gabruk' => !empty($data['Gabruk']) ? $data['Gabruk'] : null,
-                'total_data_daily' => !empty($data['Total Data Anorganik Harian']) ? $data['Total Data Anorganik Harian'] : null,
+                'plastic_ldpe' => isset($data['Plastic LDPE']) ? $data['Plastic LDPE'] : null,
+                'plastic_hdpe' => isset($data['Plastic HDPE']) ? $data['Plastic HDPE'] : null,
+                'plastic_pet' => isset($data['Plastic PET']) ? $data['Plastic PET'] : null,
+                'plastic_pp' => isset($data['Plastic PP']) ? $data['Plastic PP'] : null,
+                'beling' => isset($data['Beling']) ? $data['Beling'] : null,
+                'aluminium' => isset($data['Aluminium']) ? $data['Aluminium'] : null,
+                'besi' => isset($data['Besi']) ? $data['Besi'] : null,
+                'kaleng' => isset($data['Kaleng']) ? $data['Kaleng'] : null,
+                'kertas' => isset($data['Kertas']) ? $data['Kertas'] : null,
+                'kardus' => isset($data['Kardus']) ? $data['Kardus'] : null,
+                'gabruk' => isset($data['Gabruk']) ? $data['Gabruk'] : null,
+                'total_data_daily' => isset($data['Total Data Anorganik Harian']) ? $data['Total Data Anorganik Harian'] : null,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
@@ -84,9 +77,9 @@ class SheetDbController extends Controller
             ->where('date', $data['Date'])
             ->where('company_id', $companyId)
             ->update([
-                'sampah_organik' => !empty($data['Sampah Organik']) ? $data['Sampah Organik'] : null,
-                'minyak_jelantah' => !empty($data['Minyak Jelantah']) ? $data['Minyak Jelantah'] : null,
-                'total_data_daily' => !empty($data['Total Data Organik Harian']) ? $data['Total Data Organik Harian'] : null,
+                'sampah_organik' => isset($data['Sampah Organik']) ? $data['Sampah Organik'] : null,
+                'minyak_jelantah' => isset($data['Minyak Jelantah']) ? $data['Minyak Jelantah'] : null,
+                'total_data_daily' => isset($data['Total Data Organik Harian']) ? $data['Total Data Organik Harian'] : null,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
 
@@ -95,9 +88,9 @@ class SheetDbController extends Controller
             \DB::table('tbl_organic_recap')->insert([
                 'date' => $data['Date'],
                 'company_id' => $companyId,
-                'sampah_organik' => !empty($data['Sampah Organik']) ? $data['Sampah Organik'] : null,
-                'minyak_jelantah' => !empty($data['Minyak Jelantah']) ? $data['Minyak Jelantah'] : null,
-                'total_data_daily' => !empty($data['Total Data Organik Harian']) ? $data['Total Data Organik Harian'] : null,
+                'sampah_organik' => isset($data['Sampah Organik']) ? $data['Sampah Organik'] : null,
+                'minyak_jelantah' => isset($data['Minyak Jelantah']) ? $data['Minyak Jelantah'] : null,
+                'total_data_daily' => isset($data['Total Data Organik Harian']) ? $data['Total Data Organik Harian'] : null,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
@@ -118,13 +111,13 @@ class SheetDbController extends Controller
             ->where('date', $data['Date'])
             ->where('company_id', $companyId)
             ->update([
-                'residu' => !empty($data['Residu']) ? $data['Residu'] : null,
-                'economic_value' => !empty($data['Economic Value']) ? $data['Economic Value'] : null,
-                'manage_by_tpst' => !empty($data['Manage by TPST']) ? $data['Manage by TPST'] : null,
-                'manage_by_wastebank' => !empty($data['Manage by Wastebank']) ? $data['Manage by Wastebank'] : null,
-                'total_all_data_anorganic' => !empty($data['Total Seluruh Data Anorganik']) ? $data['Total Seluruh Data Anorganik'] : null,
-                'total_all_data_organic' => !empty($data['Total Seluruh Data Organik']) ? $data['Total Seluruh Data Organik'] : null,
-                'total_all_waste' => !empty($data['Total Seluruh Sampah']) ? $data['Total Seluruh Sampah'] : null,
+                'residu' => isset($data['Residu']) ? $data['Residu'] : null,
+                'economic_value' => isset($data['Economic Value']) ? $data['Economic Value'] : null,
+                'manage_by_tpst' => isset($data['Manage by TPST']) ? $data['Manage by TPST'] : null,
+                'manage_by_wastebank' => isset($data['Manage by Wastebank']) ? $data['Manage by Wastebank'] : null,
+                'total_all_data_anorganic' => isset($data['Total Seluruh Data Anorganik']) ? $data['Total Seluruh Data Anorganik'] : null,
+                'total_all_data_organic' => isset($data['Total Seluruh Data Organik']) ? $data['Total Seluruh Data Organik'] : null,
+                'total_all_waste' => isset($data['Total Seluruh Sampah']) ? $data['Total Seluruh Sampah'] : null,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
 
@@ -133,13 +126,13 @@ class SheetDbController extends Controller
             \DB::table('tbl_summary_recap')->insert([
                 'date' => $data['Date'],
                 'company_id' => $companyId,
-                'residu' => !empty($data['Residu']) ? $data['Residu'] : null,
-                'economic_value' => !empty($data['Economic Value']) ? $data['Economic Value'] : null,
-                'manage_by_tpst' => !empty($data['Manage by TPST']) ? $data['Manage by TPST'] : null,
-                'manage_by_wastebank' => !empty($data['Manage by Wastebank']) ? $data['Manage by Wastebank'] : null,
-                'total_all_data_anorganic' => !empty($data['Total Seluruh Data Anorganik']) ? $data['Total Seluruh Data Anorganik'] : null,
-                'total_all_data_organic' => !empty($data['Total Seluruh Data Organik']) ? $data['Total Seluruh Data Organik'] : null,
-                'total_all_waste' => !empty($data['Total Seluruh Sampah']) ? $data['Total Seluruh Sampah'] : null,
+                'residu' => isset($data['Residu']) ? $data['Residu'] : null,
+                'economic_value' => isset($data['Economic Value']) ? $data['Economic Value'] : null,
+                'manage_by_tpst' => isset($data['Manage by TPST']) ? $data['Manage by TPST'] : null,
+                'manage_by_wastebank' => isset($data['Manage by Wastebank']) ? $data['Manage by Wastebank'] : null,
+                'total_all_data_anorganic' => isset($data['Total Seluruh Data Anorganik']) ? $data['Total Seluruh Data Anorganik'] : null,
+                'total_all_data_organic' => isset($data['Total Seluruh Data Organik']) ? $data['Total Seluruh Data Organik'] : null,
+                'total_all_waste' => isset($data['Total Seluruh Sampah']) ? $data['Total Seluruh Sampah'] : null,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
@@ -162,24 +155,28 @@ class SheetDbController extends Controller
 
     public function saveDataAllCompany() {
         date_default_timezone_set('Asia/Jakarta');
+        $sheetDbApiKey = env('SHEETDB_API_KEY');
         $date = date('Y-m-d');
         $companies = \DB::table('company')->get();
         
         foreach ($companies as $company) {
-            $sheetDb = new SheetDB('e2f6ea3hctvaw', $company->name);
+            $sheetDb = new SheetDB($sheetDbApiKey, $company->name);
             
-            if (!empty($sheetDb->get())) {
-                $response = $sheetDb->search(['Date' => $date]);
-                $responseData = json_decode(json_encode($response), true);
+            $response = $sheetDb->search(['Date' => $date]);
+            $responseData = json_decode(json_encode($response), true);
 
+            if (!empty($responseData)) {
                 $this->saveData($company->id, $responseData);
             }
         }
     }
 
-    public function saveDataManual($companyName, $startDate, $endDate) {
+    public function saveDataManualRangeDate($companyName, $startDate, $endDate) {
+        set_time_limit(1800); // 30 Minutes
+        
+        $sheetDbApiKey = env('SHEETDB_API_KEY');
         $company = \DB::table('company')->where('name', $companyName)->first();
-        $sheetDb = new SheetDB('e2f6ea3hctvaw', $company->name);
+        $sheetDb = new SheetDB($sheetDbApiKey, $company->name);
 
         $dateRange = [];
         try {
@@ -207,25 +204,41 @@ class SheetDbController extends Controller
             return response()->json(['error' => 'An error occurred while processing dates'], 400);
         }
 
-        
         foreach ($dateRange as $date) {
             $response = $sheetDb->search(['Date' => $date]);
+            $responseData = json_decode(json_encode($response), true);
             
-            if (!empty($sheetDb->get())) {
-                $response = $sheetDb->search(['Date' => $date]);
-                $responseData = json_decode(json_encode($response), true);
-                
-                try {
-                    $this->saveData($company->id, $responseData);
-                    return response()->json(['message' => 'Data saved successfully']);
-                } catch (\Exception $e) {
-                    return response()->json(['error' => 'An error occurred while saving data: ' . $e->getMessage()], 500);
-                }
-            } else {
-                return response()->json(['message' => 'No data found']);
+            if (empty($responseData)) {
+                return response()->json(['error' => 'No data found for date: ' . $date], 404);
             }
+            
+            $this->saveData($company->id, $responseData);
         }
+
+        return response()->json(['message' => 'Data saved successfully']);
     }
 
+    
+    public function saveDataManualSelectedDate($companyName, $selectedDate) {
+        set_time_limit(1800); // 30 Minutes
+        
+        $sheetDbApiKey = env('SHEETDB_API_KEY');
+        $company = \DB::table('company')->where('name', $companyName)->first();
+        $sheetDb = new SheetDB($sheetDbApiKey, $company->name);
 
+        $arraySelectedDate = explode(',', $selectedDate);
+
+        foreach ($arraySelectedDate as $date) {
+            $response = $sheetDb->search(['Date' => $date]);
+            $responseData = json_decode(json_encode($response), true);
+
+            if (empty($responseData)) {
+                return response()->json(['error' => 'No data found for date: ' . $date], 404);
+            }
+            
+            $this->saveData($company->id, $responseData);
+        }
+
+        return response()->json(['message' => 'Data saved successfully']);
+    }
 }

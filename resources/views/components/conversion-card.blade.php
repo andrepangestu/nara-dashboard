@@ -1,7 +1,7 @@
 <div class="card card-layout">
   <div class="card-header border-0">
     <div class="d-flex justify-content-between">
-      <h3 class="card-title">Total nasabah</h3>
+      <h3 class="card-title">Economic value</h3>
     </div>
   </div>
   <div class="card-body">

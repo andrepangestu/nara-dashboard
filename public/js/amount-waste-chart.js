@@ -82,11 +82,21 @@ function getDataAmountWasteByMonth(selected_date) {
 }
 
 function loadAmountWasteChart(valueTimeFrame, data) {
-    const ticksStyle = {
+    const ticksStyleX = {
         color: '#fff',
         font: {
             family: 'Helvetica',
             size: 14,
+            weight: 300,
+        },
+        align: 'center',
+    };
+
+    const ticksStyleY = {
+        color: '#fff',
+        font: {
+            family: 'Helvetica',
+            size: 12,
             weight: 300,
         },
         align: 'center',
@@ -154,13 +164,11 @@ function loadAmountWasteChart(valueTimeFrame, data) {
                         valueTimeFrame === 'day'
                             ? dataAnorganicDays
                             : dataAnorganicMonth,
-                    backgroundColor: '#FA897F',
+                    backgroundColor: 'tansparent',
                     borderColor: '#FA897F',
                     pointBorderColor: '#FA897F',
                     pointBackgroundColor: '#FA897F',
                     fill: false,
-                    // pointHoverBackgroundColor: '#007bff',
-                    // pointHoverBorderColor    : '#007bff'
                 },
                 {
                     type: 'line',
@@ -173,8 +181,6 @@ function loadAmountWasteChart(valueTimeFrame, data) {
                     pointBorderColor: '#5AB2FF',
                     pointBackgroundColor: '#5AB2FF',
                     fill: false,
-                    // pointHoverBackgroundColor: '#ced4da',
-                    // pointHoverBorderColor    : '#ced4da'
                 },
 
                 {
@@ -188,8 +194,6 @@ function loadAmountWasteChart(valueTimeFrame, data) {
                     pointBorderColor: '#58BA77',
                     pointBackgroundColor: '#58BA77',
                     fill: false,
-                    // pointHoverBackgroundColor: '#ced4da',
-                    // pointHoverBorderColor    : '#ced4da'
                 },
             ],
         },
@@ -200,24 +204,38 @@ function loadAmountWasteChart(valueTimeFrame, data) {
             },
             scales: {
                 x: {
-                    ticks: ticksStyle,
-                    // ticks: $.extend(
-                    //     {
-                    //         beginAtZero: true,
-                    //         suggestedMax: 200,
-                    //     },
-                    //     ticksStyle
-                    // ),
-                    beginAtZero: true,
+                    ticks: $.extend(
+                        {
+                            beginAtZero: true,
+                        },
+                        ticksStyleX
+                    ),
                     grid: {
                         color: '#5973B2',
                         borderDash: [5, 5],
                     },
-                },
-                y: {
-                    ticks: {
+                    border: {
                         display: false,
                     },
+                },
+                y: {
+                    // afterTickToLabelConversion: function (chart) {
+                    //     chart.ticks = [];
+                    //     chart.ticks.push({ value: 200, label: '200' });
+                    //     chart.ticks.push({ value: 1100, label: '1.100' });
+                    //     chart.ticks.push({ value: 2000, label: '2.000' });
+                    // },
+                    ticks: $.extend(
+                        {
+                            maxTicksLimit: 3,
+                            callback: function (value, index, values) {
+                                return value
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                            },
+                        },
+                        ticksStyleY
+                    ),
                     grid: {
                         display: false,
                     },

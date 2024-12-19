@@ -112,9 +112,16 @@ function loadAnorganicChart(data) {
                     },
                     ticks: ticksStyle,
                     beginAtZero: true,
+                    border: {
+                        display: false,
+                    },
                 },
                 y: {
                     ticks: {
+                        display: false,
+                    },
+                    beginAtZero: true,
+                    border: {
                         display: false,
                     },
                     grid: {
@@ -129,7 +136,9 @@ function loadAnorganicChart(data) {
                 tooltip: {
                     callbacks: {
                         label: function (context) {
-                            return context.raw ? formatNumberWithDots(context.raw) : 0;
+                            return context.raw
+                                ? formatNumberWithDots(context.raw)
+                                : 0;
                         },
                     },
                 },
